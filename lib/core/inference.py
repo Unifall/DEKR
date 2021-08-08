@@ -12,8 +12,8 @@ from __future__ import print_function
 
 import torch
 
-from dataset.transforms import FLIP_CONFIG
-from utils.transforms import up_interpolate
+from DEKR.lib.dataset.transforms import FLIP_CONFIG
+from DEKR.lib.utils.transforms import up_interpolate
 
 
 def get_locations(output_h, output_w, device):

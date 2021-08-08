@@ -23,8 +23,8 @@ from torch.utils.data import Dataset
 
 import pycocotools
 from pycocotools.cocoeval import COCOeval
-from utils import zipreader
-from utils.rescore import COCORescoreEval
+from DEKR.lib.utils import zipreader
+from DEKR.lib.utils.rescore import COCORescoreEval
 
 logger = logging.getLogger(__name__)
 

@@ -13,7 +13,7 @@ import torch
 import torch.nn as nn
 from torch.autograd import Variable
 import pickle
-import models
+import DEKR.lib.models
 from pycocotools.cocoeval import COCOeval as COCOEval
 from crowdposetools.cocoeval import COCOeval as CrowdposeEval
 

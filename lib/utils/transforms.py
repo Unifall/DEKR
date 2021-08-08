@@ -162,7 +162,7 @@ def resize(image, input_size):
 
 
 def get_multi_scale_size(image, input_size, current_scale, min_scale):
-    h, w, _ = image.shape
+    h, w = image.shape[-2:]
     center = np.array([int(w / 2.0 + 0.5), int(h / 2.0 + 0.5)])
 
     # calculate the size for min_scale

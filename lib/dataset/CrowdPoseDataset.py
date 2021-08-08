@@ -22,8 +22,8 @@ import numpy as np
 from torch.utils.data import Dataset
 
 from crowdposetools.cocoeval import COCOeval
-from utils import zipreader
-from utils.rescore import CrowdRescoreEval
+from DEKR.lib.utils import zipreader
+from DEKR.lib.utils.rescore import CrowdRescoreEval
 
 logger = logging.getLogger(__name__)
 
