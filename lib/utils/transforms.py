@@ -162,7 +162,7 @@ def resize(image, input_size):
 
 
 def get_multi_scale_size(image, input_size, current_scale, min_scale):
-    h, w = image.shape[-2:]
+    h, w, _ = image.shape
     center = np.array([int(w / 2.0 + 0.5), int(h / 2.0 + 0.5)])
 
     # calculate the size for min_scale
@@ -190,7 +190,11 @@ def resize_align_multi_scale(image, input_size, current_scale, min_scale):
         image, input_size, current_scale, min_scale
     )
     trans = get_affine_transform(center, scale, 0, size_resized)
-
+    t_trans = torch.tensor(trans,dtype=torch.float32).unsqueeze(0).cuda()
+    from kornia.geometry.transform import warp_affine
+    y = warp_affine(image.unsqueeze(0),
+        t_trans,
+        size_resized)
     image_resized = cv2.warpAffine(
         image,
         trans,

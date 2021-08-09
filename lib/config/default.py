@@ -139,10 +139,10 @@ _C.RESCORE.MODEL_FILE = 'model/rescore/final_rescore_coco_kpt.pth'
 _C.RESCORE.DATA_FILE = 'data/rescore_data/rescore_dataset_train_coco_kpt'
 
 
-def update_config(cfg, args):
+def update_config(cfg, cfg_path):
     cfg.defrost()
-    cfg.merge_from_file(args.cfg)
-    cfg.merge_from_list(args.opts)
+    cfg.merge_from_file(cfg_path)
+    # cfg.merge_from_list(args.opts)
 
     if not os.path.exists(cfg.DATASET.ROOT):
         cfg.DATASET.ROOT = os.path.join(
