@@ -51,7 +51,7 @@ def fliplr_joints(joints, joints_vis, width, matched_parts):
 
 def transform_preds(coords, center, scale, output_size):
     # target_coords = np.zeros(coords.shape)
-    target_coords = coords.copy()
+    target_coords = coords.clone().numpy()
     trans = get_affine_transform(center, scale, 0, output_size, inv=1)
     for p in range(coords.shape[0]):
         target_coords[p, 0:2] = affine_transform(coords[p, 0:2], trans)
@@ -190,11 +190,11 @@ def resize_align_multi_scale(image, input_size, current_scale, min_scale):
         image, input_size, current_scale, min_scale
     )
     trans = get_affine_transform(center, scale, 0, size_resized)
-    t_trans = torch.tensor(trans,dtype=torch.float32).unsqueeze(0).cuda()
-    from kornia.geometry.transform import warp_affine
-    y = warp_affine(image.unsqueeze(0),
-        t_trans,
-        size_resized)
+    # t_trans = torch.tensor(trans,dtype=torch.float32).unsqueeze(0).cuda()
+    # from kornia.geometry.transform import warp_affine
+    # y = warp_affine(image.unsqueeze(0),
+    #     t_trans,
+    #     size_resized)
     image_resized = cv2.warpAffine(
         image,
         trans,
@@ -212,7 +212,7 @@ def get_final_preds(grouped_joints, center, scale, heatmap_size):
         joints = transform_preds(person, center, scale, heatmap_size)
         final_results.append(joints)
 
-    return final_results
+    return torch.tensor(final_results)
 
 def up_interpolate(x,size,mode='bilinear'):
     H=x.size()[2]

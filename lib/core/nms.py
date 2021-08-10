@@ -105,7 +105,7 @@ def pose_nms(cfg, heatmap_avg, poses):
                                             cfg.DATASET.MAX_NUM_PEOPLE)
         poses = poses[topk_inds]
 
-    poses = [poses.numpy()]
+    poses = [poses]
     scores = [i[:, 2].mean() for i in poses[0]]
 
-    return poses, scores
+    return poses, torch.tensor(scores)
