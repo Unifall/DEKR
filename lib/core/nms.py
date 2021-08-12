@@ -12,9 +12,9 @@ from __future__ import print_function
 import torch
 
 
-def get_heat_value(pose_coord, heatmap):
+def get_heat_value(pose_coord, heatmap,device='gpu'):
     kpt_now, num_joints, _ = pose_coord.shape
-    heatval = torch.zeros((kpt_now, num_joints, 1)).cuda()
+    heatval = torch.zeros((kpt_now, num_joints, 1)).to(device)
     for i in range(kpt_now):
         for j in range(num_joints):
             k1, k2 = int(pose_coord[i,j,0]), int(pose_coord[i,j,0])+1
@@ -66,7 +66,7 @@ def nms_core(cfg, pose_coord, heat_score):
     return keep_pose_inds
 
 
-def pose_nms(cfg, heatmap_avg, poses):
+def pose_nms(cfg, heatmap_avg, poses,device='gpu'):
     """
     NMS for the regressed poses results.
 
@@ -90,7 +90,7 @@ def pose_nms(cfg, heatmap_avg, poses):
         return [], []
 
     num_people, num_joints, _ = pose_coord.shape
-    heatval = get_heat_value(pose_coord, heatmap_avg[0])
+    heatval = get_heat_value(pose_coord, heatmap_avg[0],device=device)
     heat_score = (torch.sum(heatval, dim=1)/num_joints)[:,0]
 
     pose_score = pose_score*heatval
